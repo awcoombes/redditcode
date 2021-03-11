@@ -32,7 +32,7 @@ while running:
         day = str(tree.xpath(timings + '/tr[3]/td[3]/div/div/div/div[1]' + '/text()')[0])
         if day == "Today": #check if game is today, if any found stop iterating and move to scheduler
             runtoday = True
-            running == False
+            running = False
         #kickoff = str(tree.xpath(timings + '/tr[3]/td[3]/div/div/div/div[2]' + '/text()')[0])
         #a = hometeam + " vs " + awayteam + ", " + day + " " + kickoff #format fixture information
         #print(a)
@@ -60,7 +60,6 @@ cron.remove_all(comment='checker')
 cron.write()
 
 print(runtoday)
-runtoday = True
 if runtoday == True:
     #cron code to schedule prematch at 1200
     schedule = "00 12 * * *"
