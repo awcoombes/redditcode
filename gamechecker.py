@@ -18,20 +18,25 @@ tree = html.fromstring(page.content) #create tree for xpaths
 #initiate counting variables
 i = 1
 j = 1
-k = 3
+k = 5
 z = 0
 running = True
 runtoday = False
-timesroute = '//*[@id="liveresults-sports-immersive__updatable-league-matches"]/div[' + str(k) + ']/div[2]/div/table/tbody/tr[' #base xpath for fixture information
 while running:
     #print(z)
     try:
+        print(k)
+        timesroute = '//*[@id="liveresults-sports-immersive__updatable-league-matches"]/div[' + str(k) + ']/div[2]/div/table/tbody/tr[' #base xpath for fixture information
         timings = timesroute + str(i) + ']/td[' + str(j) + ']/div/div/div/table' #iterate extended xpath base through table of fixtures
         #hometeam = str(tree.xpath(timings + '/tr[5]/td[2]/div/span[1]' + '/text()')[0]) #collect fixture information
         #awayteam = str(tree.xpath(timings + '/tr[6]/td[2]/div/span[1]' + '/text()')[0])
         day = str(tree.xpath(timings + '/tr[3]/td[3]/div/div/div/div[1]' + '/text()')[0])
+        print(day)
         if day == "Today": #check if game is today, if any found stop iterating and move to scheduler
             runtoday = True
+            running = False
+        else:
+            print("other day found")
             running = False
         #kickoff = str(tree.xpath(timings + '/tr[3]/td[3]/div/div/div/div[2]' + '/text()')[0])
         #a = hometeam + " vs " + awayteam + ", " + day + " " + kickoff #format fixture information
@@ -43,10 +48,11 @@ while running:
             i += 1
             j = 1
     except Exception as e: #entered if future game not found
-        #print(e)
+        print(e)
         z += 1 #increment game counter
         if z > 12: #stop checking if game counter exceeds max number of games in a gameweek
-            running = False
+            k += 1
+            z = 0
         elif j == 1: #counting variables update to move through table
             j = 2
         elif j == 2:
