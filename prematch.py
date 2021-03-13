@@ -21,8 +21,10 @@ data = [] #output list
 #initiate counting variables
 i = 1
 j = 1
-k = 3
+with open ("k.txt", "r") as file:
+    k = int(file.read())
 z = 0
+print(k)
 gameweekroute = '//*[@id="liveresults-sports-immersive__updatable-league-matches"]/div[' + str(k) + ']/div[1]' #check current gameweek
 thisweek = str(tree.xpath(gameweekroute + '/text()')[0])
 k -= 1
@@ -31,7 +33,7 @@ k += 1
 lastweek = str(tree.xpath(gameweekroute + '/text()')[0])
 checkweek = int(lastweek[9:-6]) #create check integer
 check = int(thisweek[9:-6]) - checkweek #see if gameweeks are sequential (original fixture list)
-if check == 1: #if sequential, only collect this gameweek
+if check > 0: #if sequential, only collect this gameweek
     multiweek = False
     titleweek = thisweek
 else: #if not sequential, collect multiple gameweeks of fixtures
@@ -124,6 +126,7 @@ elif multiweek == True:
 content = "" #initiate content variable
 starthour = 23 #initatiate time check variable
 startmin = 59
+matchtime = "23:59"
 for i in data: #fill content variable with formatted text
     content = content + i + "  \n"
     start = int(i[-5:-3])
@@ -135,7 +138,7 @@ content = content + "\n\nThis thread was posted automatically, if there are any 
 #print(data)
 sub = "coombeseh" #set up variables for reddit post
 title = "Pre-Match thread: " + titleweek
-link = u.post(sub, title, content) #post to reddit
+#link = u.post(sub, title, content) #post to reddit
 print(matchtime)
 
 #cron code to schedule match thread at matchtime

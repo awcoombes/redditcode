@@ -15,17 +15,19 @@ champ =  "https://www.google.co.uk/async/lr_lg_fp?yv=3&q=lg|/g/11j74c9ljn|mt|fp&
 page = requests.get(url=champ, headers=headers) #load HTML
 tree = html.fromstring(page.content) #create tree for xpaths
 
+##with open("test.txt", "w") as file:
+##    file.write(page.text)
+
 #initiate counting variables
 i = 1
 j = 1
-k = 5
+k = 1
 z = 0
 running = True
 runtoday = False
 while running:
     #print(z)
     try:
-        print(k)
         timesroute = '//*[@id="liveresults-sports-immersive__updatable-league-matches"]/div[' + str(k) + ']/div[2]/div/table/tbody/tr[' #base xpath for fixture information
         timings = timesroute + str(i) + ']/td[' + str(j) + ']/div/div/div/table' #iterate extended xpath base through table of fixtures
         #hometeam = str(tree.xpath(timings + '/tr[5]/td[2]/div/span[1]' + '/text()')[0]) #collect fixture information
@@ -48,10 +50,12 @@ while running:
             i += 1
             j = 1
     except Exception as e: #entered if future game not found
-        print(e)
+        ##print(e)
         z += 1 #increment game counter
         if z > 12: #stop checking if game counter exceeds max number of games in a gameweek
             k += 1
+            i = 1
+            j = 1
             z = 0
         elif j == 1: #counting variables update to move through table
             j = 2
@@ -60,6 +64,10 @@ while running:
             i += 1
         else: #stop checking in any other scenario
             running = False
+
+k += 1
+with open ("k.txt", "w") as file:
+    file.write(str(k))
 
 cron = CronTab(user='andrew')
 cron.remove_all(comment='checker')
