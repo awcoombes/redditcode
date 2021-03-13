@@ -142,10 +142,10 @@ title = "Pre-Match thread: " + titleweek
 print(matchtime)
 
 #cron code to schedule match thread at matchtime
-cron = CronTab(user='andrew')
+cron = CronTab(user='anne')
 cron.remove_all(comment='prematch')
 cron.write()
 schedule = str(startmin) + " " + str(starthour) + " * * *"
-job = cron.new(command='/usr/bin/python3 /home/andrew/code/matchthread.py > /home/andrew/code/matchlog 2>&1', comment = "match")
+job = cron.new(command='/usr/bin/python3 /home/anne/code/python/redditcode/matchthread.py >/home/anne/code/python/redditcode/matchlog 2>&1', comment = "match")
 job.setall(schedule)
 cron.write()

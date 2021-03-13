@@ -32,7 +32,7 @@ while running:
         timings = timesroute + str(i) + ']/td[' + str(j) + ']/div/div/div/table' #iterate extended xpath base through table of fixtures
         #hometeam = str(tree.xpath(timings + '/tr[5]/td[2]/div/span[1]' + '/text()')[0]) #collect fixture information
         #awayteam = str(tree.xpath(timings + '/tr[6]/td[2]/div/span[1]' + '/text()')[0])
-        day = str(tree.xpath(timings + '/tr[3]/td[3]/div/div/div/div[1]' + '/text()')[0])
+        day = str(tree.xpath(timings + '/tbody/tr[3]/td[3]/div/div/div/div[1]/text()'))
         print(day)
         if day == "Today": #check if game is today, if any found stop iterating and move to scheduler
             runtoday = True
@@ -69,7 +69,7 @@ k += 1
 with open ("k.txt", "w") as file:
     file.write(str(k))
 
-cron = CronTab(user='andrew')
+cron = CronTab(user='anne')
 cron.remove_all(comment='checker')
 cron.write()
 
@@ -77,14 +77,14 @@ print(runtoday)
 if runtoday == True:
     #cron code to schedule prematch at 1200
     schedule = "00 12 * * *"
-    cron = CronTab(user='andrew')
-    job = cron.new(command='/usr/bin/python3 /home/andrew/code/prematch.py > /home/andrew/code/prematchlog 2>&1', comment = "prematch")
+    cron = CronTab(user='anne')
+    job = cron.new(command='/usr/bin/python3  /home/anne/code/python/redditcode/prematch.py >/home/anne/code/python/redditcode/prematchlog 2>&1', comment = "prematch")
     job.setall(schedule)
     cron.write()
 else:
     #cron code to schedule self at 0200 tomorrow
     schedule = "00 02 * * *"
-    cron = CronTab(user='andrew')
-    job = cron.new(command='/usr/bin/python3 /home/andrew/code/gamechecker.py > /home/andrew/code/checkerlog 2>&1', comment = "checker")
+    cron = CronTab(user='anne')
+    job = cron.new(command='/usr/bin/python3 /home/anne/code/python/redditcode/gamechecker.py >/home/anne/code/python/redditcode/checkerlog 2>&1', comment = "checker")
     job.setall(schedule)
     cron.write()
