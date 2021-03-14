@@ -25,9 +25,11 @@ fixtures = []
 #initiate counting variables
 i = 1
 j = 1
-k = 3
+with open ("k.txt", "r") as file:
+    k = int(file.read())
 z = 0
 gameweekroute = '//*[@id="liveresults-sports-immersive__updatable-league-matches"]/div[' + str(k) + ']/div[1]' #check current gameweek
+print(gameweekroute)
 thisweek = str(tree.xpath(gameweekroute + '/text()')[0])
 k -= 1
 gameweekroute = '//*[@id="liveresults-sports-immersive__updatable-league-matches"]/div[' + str(k) + ']/div[1]' #check last gameweek
@@ -35,7 +37,7 @@ k += 1
 lastweek = str(tree.xpath(gameweekroute + '/text()')[0])
 checkweek = int(lastweek[9:-6]) #create check integer
 check = int(thisweek[9:-6]) - checkweek #see if gameweeks are sequential (original fixture list)
-if check == 1: #if sequential, only collect this gameweek
+if check > 0: #if sequential, only collect this gameweek
     multiweek = False
     titleweek = thisweek
 else: #if not sequential, collect multiple gameweeks of fixtures
@@ -85,7 +87,7 @@ while running:
             gameweekroute = '//*[@id="liveresults-sports-immersive__updatable-league-matches"]/div[' + str(k) + ']/div[1]' #check next gameweek
             thisweek = str(tree.xpath(gameweekroute + '/text()')[0])
             check = int(thisweek[9:-6]) - checkweek #compare next gameweek to check gameweek
-            if check == 1: #if next gameweek is one more than check gameweek, stop iterating
+            if check >= 1: #if next gameweek is one more than check gameweek, stop iterating
                 running = False
             else: #if next gameweek is NOT one more than check gameweek, load fixtures from it
                 i = 1
@@ -174,7 +176,7 @@ while running:
             gameweekroute = '//*[@id="liveresults-sports-immersive__updatable-league-matches"]/div[' + str(k) + ']/div[1]' #check next gameweek
             thisweek = str(tree.xpath(gameweekroute + '/text()')[0])
             check = int(thisweek[9:-6]) - checkweek #compare next gameweek to check gameweek
-            if check == 1: #if next gameweek is one more than check gameweek, stop iterating
+            if check >= 1: #if next gameweek is one more than check gameweek, stop iterating
                 running = False
             else: #if next gameweek is NOT one more than check gameweek, load fixtures from it
                 i = 1

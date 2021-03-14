@@ -108,7 +108,7 @@ elif multiweek == True:
                 gameweekroute = '//*[@id="liveresults-sports-immersive__updatable-league-matches"]/div[' + str(k) + ']/div[1]' #check next gameweek
                 thisweek = str(tree.xpath(gameweekroute + '/text()')[0])
                 check = int(thisweek[9:-6]) - checkweek #compare next gameweek to check gameweek
-                if check == 1: #if next gameweek is one more than check gameweek, stop iterating
+                if check >= 1: #if next gameweek is one more than check gameweek, stop iterating
                     running = False
                 else: #if next gameweek is NOT one more than check gameweek, load fixtures from it
                     i = 1
@@ -138,7 +138,7 @@ content = content + "\n\nThis thread was posted automatically, if there are any 
 #print(data)
 sub = "coombeseh" #set up variables for reddit post
 title = "Pre-Match thread: " + titleweek
-#link = u.post(sub, title, content) #post to reddit
+link = u.post(sub, title, content) #post to reddit
 print(matchtime)
 
 #cron code to schedule match thread at matchtime
