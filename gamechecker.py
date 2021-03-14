@@ -65,7 +65,7 @@ while running:
         else: #stop checking in any other scenario
             running = False
 
-k += 1
+print(k)
 with open ("k.txt", "w") as file:
     file.write(str(k))
 
