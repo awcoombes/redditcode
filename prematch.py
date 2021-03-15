@@ -16,6 +16,8 @@ champ =  "https://www.google.co.uk/async/lr_lg_fp?yv=3&q=lg|/g/11j74c9ljn|mt|fp&
 page = requests.get(url=champ, headers=headers) #load HTML
 tree = html.fromstring(page.content) #create tree for xpaths
 
+#clubs formatting dict
+clubsdict = {'Bournemouth': '[BOU](https://reddit.com/r/AFCBournemouth)', 'Barnsley': '[BAR](https://reddit.com/r/BarnsleyFC)', 'Birmingham': '[BIR](https://reddit.com/r/BCFC)', 'Blackburn Rovers': '[BBR](https://reddit.com/r/BRFC)', 'Brentford': '[BRE](https://reddit.com/r/Brentford)', 'Bristol City': '[BRC](https://reddit.com/r/BristolCity)', 'Cardiff City': '[CDF](https://reddit.com/r/Bluebirds)', 'Coventry': '[CVC](https://reddit.com/r/ccfc)', 'Derby County': '[DER](https://reddit.com/r/DerbyCounty)', 'Huddersfield': '[HUD](https://reddit.com/r/HuddersfieldTownFC)', 'Luton Town': '[LUT](https://reddit.com/r/COYH)', 'Middlesbrough': '[MID](https://reddit.com/r/Boro)', 'Millwall': '[MIL](https://reddit.com/r/Millwall)', 'Norwich City': '[NOR](https://reddit.com/r/NorwichCity)', 'Nottm Forest': '[NTF](https://reddit.com/r/NFFC)', 'Preston': '[PNE](https://reddit.com/r/PNE)', 'QPR': '[QPR](https://reddit.com/r/SuperHoops)', 'Reading': '[RDG](https://reddit.com/r/URz)', 'Rotherham': '[RTU](https://www.reddit.com/subreddits/create)', 'Sheffield Wednesday': '[SHW](https://reddit.com/r/SheffieldWednesday)', 'Stoke City': '[STK](https://reddit.com/r/StokeCityFC)', 'Swansea': '[SWA](https://reddit.com/r/SwanseaCity)', 'Watford': '[WAT](https://reddit.com/r/Watford_FC)', 'Wycombe': '[WYC](https://reddit.com/r/WycombeWanderers)'}
 data = [] #output list
 
 #initiate counting variables
@@ -58,7 +60,7 @@ if multiweek == False:
             if day == "Today":
                 runtoday = True
             kickoff = str(tree.xpath(timings + '/tr[3]/td[3]/div/div/div/div[2]' + '/text()')[0])
-            a = hometeam + " vs " + awayteam + ", " + day + " " + kickoff #format fixture information
+            a = clubsdict[hometeam] + " vs " + clubsdict[awayteam] + ", " + day + " " + kickoff #format fixture information
             data.append(a)
             z += 1 #increment game counter
             if j == 1: #counting variables update to move through table
@@ -92,7 +94,7 @@ elif multiweek == True:
             awayteam = str(tree.xpath(timings + '/tr[6]/td[2]/div/span[1]' + '/text()')[0])
             day = str(tree.xpath(timings + '/tr[3]/td[3]/div/div/div/div[1]' + '/text()')[0])
             kickoff = str(tree.xpath(timings + '/tr[3]/td[3]/div/div/div/div[2]' + '/text()')[0])
-            a = hometeam + " vs " + awayteam + ", " + day + " " + kickoff #format fixture information
+            a = clubsdict[hometeam] + " vs " + clubsdict[awayteam] + ", " + day + " " + kickoff #format fixture information
             data.append(a)
             z += 1 #increment game counter
             if j == 1: #counting variables update to move through table
@@ -139,7 +141,7 @@ content = content + "\n\nThis thread was posted automatically, if there are any 
 sub = "coombeseh" #set up variables for reddit post
 title = "Pre-Match thread: " + titleweek
 link = u.post(sub, title, content) #post to reddit
-print(matchtime)
+#print(content)
 
 #cron code to schedule match thread at matchtime
 cron = CronTab(user='andrew')

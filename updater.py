@@ -19,6 +19,8 @@ tree = html.fromstring(page.content) #create tree for xpaths
 with open("content.txt", "w") as file:
     file.write(page.text)
 
+#clubs formatting dict
+clubsdict = {'Bournemouth': '[BOU](https://reddit.com/r/AFCBournemouth)', 'Barnsley': '[BAR](https://reddit.com/r/BarnsleyFC)', 'Birmingham': '[BIR](https://reddit.com/r/BCFC)', 'Blackburn Rovers': '[BBR](https://reddit.com/r/BRFC)', 'Brentford': '[BRE](https://reddit.com/r/Brentford)', 'Bristol City': '[BRC](https://reddit.com/r/BristolCity)', 'Cardiff City': '[CDF](https://reddit.com/r/Bluebirds)', 'Coventry': '[CVC](https://reddit.com/r/ccfc)', 'Derby County': '[DER](https://reddit.com/r/DerbyCounty)', 'Huddersfield': '[HUD](https://reddit.com/r/HuddersfieldTownFC)', 'Luton Town': '[LUT](https://reddit.com/r/COYH)', 'Middlesbrough': '[MID](https://reddit.com/r/Boro)', 'Millwall': '[MIL](https://reddit.com/r/Millwall)', 'Norwich City': '[NOR](https://reddit.com/r/NorwichCity)', 'Nottm Forest': '[NTF](https://reddit.com/r/NFFC)', 'Preston': '[PNE](https://reddit.com/r/PNE)', 'QPR': '[QPR](https://reddit.com/r/SuperHoops)', 'Reading': '[RDG](https://reddit.com/r/URz)', 'Rotherham': '[RTU](https://www.reddit.com/subreddits/create)', 'Sheffield Wednesday': '[SHW](https://reddit.com/r/SheffieldWednesday)', 'Stoke City': '[STK](https://reddit.com/r/StokeCityFC)', 'Swansea': '[SWA](https://reddit.com/r/SwanseaCity)', 'Watford': '[WAT](https://reddit.com/r/Watford_FC)', 'Wycombe': '[WYC](https://reddit.com/r/WycombeWanderers)'}
 playing = [] #output lists
 fixtures = []
 
@@ -71,7 +73,7 @@ while running:
             allended = False
         if currenttime == "Halfâtime": #correctly format HT
             currenttime = "Half Time"
-        a = hometeam + " " + homescore + "-" + awayscore + " " + awayteam + ", " + currenttime #format all collected values
+        a = clubsdict[hometeam] + " " + homescore + "-" + awayscore + " " + clubsdict[awayteam] + ", " + currenttime #format all collected values
         playing.append(a)
         z += 1 #increment game counter
         if j == 1: #counting variables update to move through table
@@ -159,7 +161,7 @@ while running:
         if day == "Tomorrow":
             runtomorrow = True
         kickoff = str(tree.xpath(timings + '/tr[3]/td[3]/div/div/div/div[2]' + '/text()')[0])
-        a = hometeam + " vs " + awayteam + ", " + day + " " + kickoff #format fixture information
+        a = clubsdict[hometeam] + " vs " + clubsdict[awayteam] + ", " + day + " " + kickoff #format fixture information
         print(a, k)
         fixtures.append(a)
         z += 1 #increment game counter
@@ -208,7 +210,7 @@ for i in fixtures:
             if start < int(startmin):
                 startmin = start
         matchtime = str(starthour) + ":" + str(startmin)
-content = content + "\n\nThis thread was posted automatically, if there are any issues please contact the mods"
+content = content + "\n\nThis thread was posted automatically and will update every five minutes during matches, if there are any issues please contact the mods"
 print(content)
 print("All ended?: " + str(allended))
 print("Games tomorrow?: " + str(runtomorrow))
