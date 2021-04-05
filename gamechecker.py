@@ -15,8 +15,8 @@ champ =  "https://www.google.co.uk/async/lr_lg_fp?yv=3&q=lg|/g/11j74c9ljn|mt|fp&
 page = requests.get(url=champ, headers=headers) #load HTML
 tree = html.fromstring(page.content) #create tree for xpaths
 
-##with open("test.txt", "w") as file:
-##    file.write(page.text)
+# with open("test.txt", "w") as file:
+#     file.write(page.text)
 
 #initiate counting variables
 i = 1

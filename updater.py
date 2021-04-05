@@ -107,44 +107,6 @@ while running:
 runtomorrow = False
 
 #collect information for games yet to start
-# if multiweek == False:
-#     running = True
-#     i = 1 #reset counting variables
-#     j = 1
-#     z = 0
-#     while running:
-#         try:
-#             timings = timesroute + str(i) + ']/td[' + str(j) + ']/div/div/div/table' #iterate extended xpath base through table of fixtures
-#             hometeam = str(tree.xpath(timings + '/tr[5]/td[2]/div/span[1]' + '/text()')[0]) #collect fixture information
-#             awayteam = str(tree.xpath(timings + '/tr[6]/td[2]/div/span[1]' + '/text()')[0])
-#             day = str(tree.xpath(timings + '/tr[3]/td[3]/div/div/div/div[1]' + '/text()')[0])
-#             if day == "Today":
-#                 allended = False
-#             if day == "Tomorrow":
-#                 runtomorrow = True
-#             kickoff = str(tree.xpath(timings + '/tr[3]/td[3]/div/div/div/div[2]' + '/text()')[0])
-#             a = hometeam + " vs " + awayteam + ", " + day + " " + kickoff #format fixture information
-#             fixtures.append(a)
-#             z += 1 #increment game counter
-#             if j == 1: #counting variables update to move through table
-#                 j = 2
-#             elif j == 2:
-#                 i += 1
-#                 j = 1
-#         except Exception as e: #entered if future game not found
-#             ##print(e)
-#             z += 1 #increment game counter
-#             if z > 12: #stop checking if game counter exceeds max number of games in a gameweek
-#                 running = False
-#             elif j == 1: #counting variables update to move through table
-#                 j = 2
-#             elif j == 2:
-#                 j = 1
-#                 i += 1
-#             else: #stop checking in any other scenario
-#                 running = False
-
-# elif multiweek == True:
 running = True
 i = 1 #reset counting variables
 j = 1
@@ -176,15 +138,18 @@ while running:
         if z > 12: #stop checking if game counter exceeds max number of games in a gameweek
             k += 1
             gameweekroute = '//*[@id="liveresults-sports-immersive__updatable-league-matches"]/div[' + str(k) + ']/div[1]' #check next gameweek
-            thisweek = str(tree.xpath(gameweekroute + '/text()')[0])
-            check = int(thisweek[9:-6]) - checkweek #compare next gameweek to check gameweek
-            if check >= 1: #if next gameweek is one more than check gameweek, stop iterating
+            try:
+                thisweek = str(tree.xpath(gameweekroute + '/text()')[0])
+                check = int(thisweek[9:-6]) - checkweek #compare next gameweek to check gameweek
+                if check >= 1: #if next gameweek is one more than check gameweek, stop iterating
+                    running = False
+                else: #if next gameweek is NOT one more than check gameweek, load fixtures from it
+                    i = 1
+                    j = 1
+                    z = 0
+                    timesroute = '//*[@id="liveresults-sports-immersive__updatable-league-matches"]/div[' + str(k) + ']/div[2]/div/table/tbody/tr['
+            except:
                 running = False
-            else: #if next gameweek is NOT one more than check gameweek, load fixtures from it
-                i = 1
-                j = 1
-                z = 0
-                timesroute = '//*[@id="liveresults-sports-immersive__updatable-league-matches"]/div[' + str(k) + ']/div[2]/div/table/tbody/tr['
         elif j == 1: #counting variables update to move through table
             j = 2
         elif j == 2:

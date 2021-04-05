@@ -132,12 +132,12 @@ matchtime = "23:59"
 for i in data: #fill content variable with formatted text
     content = content + i + "  \n"
     start = int(i[-5:-3])
-    if start < starthour: #find earliest game start time
+    day = i[-7]
+    if start < starthour and day == "y": #find earliest game start time
         starthour = start
         startmin = i[-2:]
     matchtime = str(starthour) + ":" + str(startmin)
 content = content + "\n\nThis thread was posted automatically, if there are any issues please contact the mods"
-#print(data)
 sub = "coombeseh" #set up variables for reddit post
 title = "Pre-Match thread: " + titleweek
 link = u.post(sub, title, content) #post to reddit
