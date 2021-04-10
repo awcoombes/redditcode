@@ -100,8 +100,8 @@ def post(subreddit, title, content):
     r = praw.Reddit(client_id = "jTU9fuDigFxLyA",
                     client_secret = "kwjxGHuBhisqjMxEgD8zQ11VLL0",
                     user_agent = user_agent,
-                    username = "coombeseh",
-                    password = "C0omb3s")
+                    username = "",
+                    password = "")
     sub = r.subreddit(subreddit)
     a = sub.submit(title, selftext=content, send_replies=False)
     return(a)
@@ -111,7 +111,7 @@ def edit(permalink, content):
     r = praw.Reddit(client_id = "jTU9fuDigFxLyA",
                     client_secret = "kwjxGHuBhisqjMxEgD8zQ11VLL0",
                     user_agent = user_agent,
-                    username = "coombeseh",
-                    password = "C0omb3s")
+                    username = "",
+                    password = "")
     a = r.submission(id=permalink)
     a.edit(content)
