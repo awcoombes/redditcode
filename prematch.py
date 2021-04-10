@@ -27,7 +27,6 @@ with open ("k.txt", "r") as file:
     k = int(file.read())
 z = 0
 gameweekroute = '//*[@id="liveresults-sports-immersive__updatable-league-matches"]/div[' + str(k) + ']/div[1]' #check current gameweek
-print(gameweekroute)
 thisweek = str(tree.xpath(gameweekroute + '/text()')[0])
 k -= 1
 gameweekroute = '//*[@id="liveresults-sports-immersive__updatable-league-matches"]/div[' + str(k) + ']/div[1]' #check last gameweek
@@ -138,7 +137,7 @@ for i in data: #fill content variable with formatted text
         startmin = i[-2:]
     matchtime = str(starthour) + ":" + str(startmin)
 content = content + "\n\nThis thread was posted automatically, if there are any issues please contact the mods"
-sub = "coombeseh" #set up variables for reddit post
+sub = "championship" #set up variables for reddit post
 title = "Pre-Match thread: " + titleweek
 link = u.post(sub, title, content) #post to reddit
 #print(content)

@@ -176,10 +176,10 @@ content = content + "\n\nThis thread was posted automatically and will update ev
 print(content)
 
 ##print(page.content)
-sub = "coombeseh"
+link = "test"
+sub = "championship"
 title = "Match thread: " + titleweek
 link = u.post(sub, title, content)
-#link = "test"
 
 with open("starttime.txt", "w") as file: #save reddit post URL
     file.write(str(link))

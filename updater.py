@@ -30,8 +30,8 @@ j = 1
 with open ("k.txt", "r") as file:
     k = int(file.read())
 z = 0
+resetk = k
 gameweekroute = '//*[@id="liveresults-sports-immersive__updatable-league-matches"]/div[' + str(k) + ']/div[1]' #check current gameweek
-print(gameweekroute)
 thisweek = str(tree.xpath(gameweekroute + '/text()')[0])
 k -= 1
 gameweekroute = '//*[@id="liveresults-sports-immersive__updatable-league-matches"]/div[' + str(k) + ']/div[1]' #check last gameweek
@@ -111,7 +111,8 @@ running = True
 i = 1 #reset counting variables
 j = 1
 z = 0
-k = 3
+k = resetk
+timesroute = '//*[@id="liveresults-sports-immersive__updatable-league-matches"]/div[' + str(k) + ']/div[2]/div/table/tbody/tr['
 while running:
     try:
         timings = timesroute + str(i) + ']/td[' + str(j) + ']/div/div/div/table' #iterate extended xpath base through table of fixtures
@@ -124,7 +125,6 @@ while running:
             runtomorrow = True
         kickoff = str(tree.xpath(timings + '/tr[3]/td[3]/div/div/div/div[2]' + '/text()')[0])
         a = clubsdict[hometeam] + " vs " + clubsdict[awayteam] + ", " + day + " " + kickoff #format fixture information
-        print(a, k)
         fixtures.append(a)
         z += 1 #increment game counter
         if j == 1: #counting variables update to move through table
@@ -141,7 +141,7 @@ while running:
             try:
                 thisweek = str(tree.xpath(gameweekroute + '/text()')[0])
                 check = int(thisweek[9:-6]) - checkweek #compare next gameweek to check gameweek
-                if check >= 1: #if next gameweek is one more than check gameweek, stop iterating
+                if check >= 1 or multiweek == False: #if next gameweek is one more than check gameweek, stop iterating
                     running = False
                 else: #if next gameweek is NOT one more than check gameweek, load fixtures from it
                     i = 1
