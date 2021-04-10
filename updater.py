@@ -182,6 +182,7 @@ print("Games tomorrow?: " + str(runtomorrow))
 postid = ""
 with open("starttime.txt", "r") as file:
     postid = file.read()
+postid = "mnnuk2"
 u.edit(postid, content)
 if allended == False:
     #cron schedule in 5 mins
